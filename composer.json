@@ -11,6 +11,7 @@
         "barryvdh/laravel-ide-helper": "^2.3",
         "laravel/dusk": "^1.1",
         "laravel/framework": "5.4.*",
+        "laravel/passport": "^2.0",
         "laravel/tinker": "~1.0",
         "spatie/laravel-menu": "^2.1"
     },

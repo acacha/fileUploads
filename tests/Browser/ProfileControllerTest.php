@@ -18,12 +18,14 @@ class ProfileControllerTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     * Test users are created ok on profile
+     * Test users are created ok on profile.
+     *
      * @test
      * @return void
      */
     public function test_users_are_created_ok_on_profile()
     {
+        //Prepare
         $faker = Factory::create();
 
         $user = [
@@ -33,12 +35,15 @@ class ProfileControllerTest extends DuskTestCase
         ];
         $admin = factory(User::class)->create();
         $this->browse(function (Browser $browser) use ($user, $admin) {
+            //Execute
             $browser->loginAs($admin)
                     ->visit('/profile')
                     ->type('name', $user['name'] )
                     ->type('email', $user['email'] )
                     ->type('password', $user['password'] )
                     ->attach('file', __DIR__.'/photos/guapo.png')
+                    ->press('Create')
+                    //asserts
                     ->assertSee('Laravel');
         });
     }

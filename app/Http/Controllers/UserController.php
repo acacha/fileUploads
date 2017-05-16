@@ -45,7 +45,7 @@ class UserController extends Controller
         $databaseUser = [
             'name'     => $request->input('name'),
             'email'    => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => bcrypt($request->input('password')),
             'file'     => $name,
         ];
         User::create($databaseUser);
