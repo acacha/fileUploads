@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use File;
 use Illuminate\Http\Request;
+use Storage;
 
 class UserController extends Controller
 {
@@ -29,12 +32,24 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
      */
     public function store(Request $request)
     {
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
 
+        Storage::disk('local')->put($name, File::get($file));
+
+        $databaseUser = [
+            'name'     => $request->input('name'),
+            'email'    => $request->input('email'),
+            'password' => $request->input('password'),
+            'file'     => $name,
+        ];
+        User::create($databaseUser);
+        return ['created' => true];
     }
 
     /**
